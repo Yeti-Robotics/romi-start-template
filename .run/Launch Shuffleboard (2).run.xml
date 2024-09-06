@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Launch Shuffleboard (2)" type="JarApplication" activateToolWindowBeforeRun="false">
+    <option name="JAR_PATH" value="$USER_HOME$/wpilib/2024/tools/artifacts/Shuffleboard-2024.3.2-macx64.jar" />
+    <module name="romi" />
+    <method v="2" />
+  </configuration>
+</component>
