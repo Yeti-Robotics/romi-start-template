@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-
+import frc.robot.sensors.RomiGyro;
 
 public class RomiDrivetrain extends SubsystemBase
 {
@@ -26,7 +25,7 @@ public class RomiDrivetrain extends SubsystemBase
     // to use DIO pins 4/5 and 6/7 for the left and right
     private final Encoder leftEncoder = new Encoder(4, 5);
     private final Encoder rightEncoder = new Encoder(6, 7);
-    
+    private final RomiGyro gyro = new RomiGyro();
     // Set up the differential drive controller
     private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotor, rightMotor);
     
@@ -44,30 +43,34 @@ public class RomiDrivetrain extends SubsystemBase
     }
     
     
-    public void arcadeDrive(double xAxisSpeed, double zAxisRotate)
-    {
-        diffDrive.arcadeDrive(xAxisSpeed, zAxisRotate);
-    }
-    
+    public void arcadeDrive(double xAxisSpeed, double zAxisRotate) {diffDrive.arcadeDrive(xAxisSpeed, zAxisRotate);}
+
+    public void tankDrive(double leftSpeed, double rightSpeed) {diffDrive.tankDrive(leftSpeed,rightSpeed);}
     
     public void resetEncoders()
     {
         leftEncoder.reset();
         rightEncoder.reset();
     }
-    
-    
+
+    public void resetGyro(){
+        gyro.reset();
+    }
+
+    public double getAngle(){
+        return gyro.getAngle();
+    }
     public double getLeftDistanceInch()
     {
         return leftEncoder.getDistance();
     }
-    
-    
+
     public double getRightDistanceInch()
     {
         return rightEncoder.getDistance();
     }
-    
+
+    public double getAverageDistanceInch() { return (leftEncoder.getDistance() + rightEncoder.getDistance()) /2.0;}
     
     @Override
     public void periodic()

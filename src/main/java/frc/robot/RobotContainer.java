@@ -8,7 +8,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -27,12 +28,24 @@ public class RobotContainer
     
     private final ExampleCommand autoCommand = new ExampleCommand(romiDrivetrain);
     private final Joystick joystick = new Joystick(0);
-    
+
+    Command driveSquare = new DriveSquare(romiDrivetrain);
+    Command driveTriangle = new DriveTriangle(romiDrivetrain);
+    Command driveCircle = new DriveCircle(0.4,6,romiDrivetrain);
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
         // Configure the button bindings
         configureButtonBindings();
+        
+        JoystickButton key_j = new JoystickButton(joystick,1);
+        JoystickButton key_k = new JoystickButton(joystick,2);
+        JoystickButton key_l = new JoystickButton(joystick,3);
+
+        key_j.onTrue(driveSquare);
+        key_k.onTrue(driveTriangle);
+        key_l.onTrue(driveCircle);
+
     }
     
     

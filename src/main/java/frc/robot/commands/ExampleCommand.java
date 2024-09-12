@@ -15,40 +15,54 @@ public class ExampleCommand extends Command
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final RomiDrivetrain subsystem;
-    
-    
+
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
+    Command driveSquare = null;
     public ExampleCommand(RomiDrivetrain subsystem)
     {
         this.subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
+
+        driveSquare = new DriveDistance(0.6,6,subsystem).
+                andThen(new TurnDegrees(0.4, 75, subsystem))
+                .andThen(new DriveDistance(0.6,6,subsystem))
+                .andThen(new TurnDegrees(0.4, 75, subsystem))
+                .andThen(new DriveDistance(0.6,6,subsystem))
+                .andThen(new TurnDegrees(0.4, 75, subsystem))
+                .andThen(new DriveDistance(0.6,6,subsystem));
+
     }
-    
-    
+
+
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        driveSquare.initialize();
+    }
     
     
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {}
+    public void execute() {
+        driveSquare.execute();
+    }
     
     
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        driveSquare.end(interrupted);
+    }
     
     
     // Returns true when the command should end.
     @Override
-    public boolean isFinished()
-    {
-        return false;
+    public boolean isFinished() {
+        return driveSquare.isFinished();
     }
 }
